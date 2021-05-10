@@ -1,43 +1,44 @@
-#µ{¦¡½X¨Ó·½https://blog.alantsai.net/posts/2018/01/data-science-series-16-r-hello-world-with-stock-analysis-using-quantmod
-#Ä±±o§@ªÌ¤¶²Ğ±o¶W´Î
-install.packages("quantmod")#¦w¸Ë®M¥ó
-library("quantmod")#©I¥s®M¥ó
+#ç¨‹å¼ç¢¼ä¾†æºhttps://blog.alantsai.net/posts/2018/01/data-science-series-16-r-hello-world-with-stock-analysis-using-quantmod
+#è¦ºå¾—ä½œè€…ä»‹ç´¹å¾—è¶…æ£’
+install.packages("quantmod")#å®‰è£å¥—ä»¶
+library("quantmod")#å‘¼å«å¥—ä»¶
+library("dplyr")#pipeé‹ç®—å­
 
-# ¨ú±ogoogleªºªÑ²¼¡A¨Ã¥B¬İ¬İ«e6µ§¸ê®Æ
+# å–å¾—googleçš„è‚¡ç¥¨ï¼Œä¸¦ä¸”çœ‹çœ‹å‰6ç­†è³‡æ–™
 getSymbols("GOOG")
 head(GOOG)
 
-# µe¥X¨«¶Õ
+# ç•«å‡ºèµ°å‹¢
 chartSeries(GOOG)
 chartSeries(GOOG["2017-11-03::2018-01-03",])
 
-# ­pºâ 20¤é©M60¤é§¡½u
+# è¨ˆç®— 20æ—¥å’Œ60æ—¥å‡ç·š
 ma20<-runMean(GOOG[,4],n=20)
 ma60<-runMean(GOOG[,4],n=60)
 head(ma20, 25)
 
-# µe¤W½u
+# ç•«ä¸Šç·š
 chartSeries(GOOG["2017-01-03::2018-01-03",], theme = "white")
 addTA(ma20,on=1,col="blue")
 addTA(ma60,on=1,col="red") 
 #-------------------------------------------------------#
-#¥xÆWªºªÑ²¼
-#¥xªÑªº¨úªº¤è¦¡«ÜÂ²³æ¡A¥Î§Ú­ÌªºªÑ²¼¥N½X+TW´N¥i¥H¤F¡A
-#¹³³o¼Ë¡C¤W¥«: ªÑ²¼¥N½X.TW¡C¤WÂd: ªÑ²¼¥N½X.TWO
-stock <- getSymbols("2317.TW", auto.assign = FALSE, from="2017-01-01" ,to="2018-01-30")#auto.assign­Y¬°T«h±q2007¶}©l§ì
+#å°ç£çš„è‚¡ç¥¨
+#å°è‚¡çš„å–çš„æ–¹å¼å¾ˆç°¡å–®ï¼Œç”¨æˆ‘å€‘çš„è‚¡ç¥¨ä»£ç¢¼+TWå°±å¯ä»¥äº†ï¼Œ
+#åƒé€™æ¨£ã€‚ä¸Šå¸‚: è‚¡ç¥¨ä»£ç¢¼.TWã€‚ä¸Šæ«ƒ: è‚¡ç¥¨ä»£ç¢¼.TWO
+stock <- getSymbols("2317.TW", auto.assign = FALSE, from="2017-01-01" ,to="2018-01-30")#auto.assignè‹¥ç‚ºTå‰‡å¾2007é–‹å§‹æŠ“
 stock2<- na.omit(stock)
 head(stock2)
 chartSeries(stock2)
-chartSeries(stock2["2017-01-01::2018-01-30",])#¹º¥XÁÍ¶Õ½u
+chartSeries(stock2["2017-01-01::2018-01-30",])#åŠƒå‡ºè¶¨å‹¢ç·š
 chartSeries(stock2["2017-01-01::2018-01-30",], theme="white")
 ma5<-runMean(stock2[,4],n=5)
-ma20<-runMean(stock2[,4],n=20)#ma¬°§¡½u
+ma20<-runMean(stock2[,4],n=20)#maç‚ºå‡ç·š
 ma60<-runMean(stock2[,4],n=60)
 head(ma20)
-#¤@¯ë¨Ó»¡·íµu´Á§¡½u¡]¦p5¤é½u¡^¥Ñ¤U¦V¤W¬ï¹Lªø´Á§¡½u¡]¦p60¤é§¡½u¡^¡A§Î¦¨ª÷¤e¡A«h¬O¶R¤JÂI¡C 
-#¤Ï¤§¡A·íµu´Á§¡½u¡]¦p5¤é½u¡^¥Ñ¤W¦V¤U¬ï¹Lªø´Á§¡½u¡]¦p60¤é§¡½u¡^¡A§Î¦¨¦º¤e¡A«h¬O½æ¥XÂI
+#ä¸€èˆ¬ä¾†èªªç•¶çŸ­æœŸå‡ç·šï¼ˆå¦‚5æ—¥ç·šï¼‰ç”±ä¸‹å‘ä¸Šç©¿éé•·æœŸå‡ç·šï¼ˆå¦‚60æ—¥å‡ç·šï¼‰ï¼Œå½¢æˆé‡‘å‰ï¼Œå‰‡æ˜¯è²·å…¥é»ã€‚ 
+#åä¹‹ï¼Œç•¶çŸ­æœŸå‡ç·šï¼ˆå¦‚5æ—¥ç·šï¼‰ç”±ä¸Šå‘ä¸‹ç©¿éé•·æœŸå‡ç·šï¼ˆå¦‚60æ—¥å‡ç·šï¼‰ï¼Œå½¢æˆæ­»å‰ï¼Œå‰‡æ˜¯è³£å‡ºé»
 chartSeries(stock2["2017-01-01::2018-01-30",], theme = "white")
-addTA(ma20,on=1,col="blue")#µe¤W§¡½u
+addTA(ma20,on=1,col="blue")#ç•«ä¸Šå‡ç·š
 addTA(ma60,on=1,col="red") 
 chartSeries(stock2["2017-01-01::2018-01-30",], theme = "black")
 addTA(ma20,on=1,col="blue")
@@ -45,19 +46,18 @@ addTA(ma60,on=1,col="red")
 addTA(ma5, on=1, col="yellow")
 
 #---------comparing two and tw-----------------------------------
-tsmc1<- getSymbols("2330.TW", auto.assign = FALSE, from="2021-01-01" ,to="2021-05-01")
-tsmc2<- na.omit(tsmc1)
-head(tsmc2)
-chartSeries(tsmc2)
-chartSeries(tsmc2["2021-01-01::2021-05-01",])#¹º¥XÁÍ¶Õ½u
-chartSeries(tsmc2["2021-01-01::2021-05-01",], theme="white")
-ma5<-runMean(tsmc2[,4],n=5)
-ma20<-runMean(tsmc2[,4],n=20)#ma¬°§¡½u
-ma60<-runMean(tsmc2[,4],n=60)
+tsmc<- getSymbols("2330.TW", auto.assign = FALSE, from="2021-01-01" ,to="2021-05-01")%>%na.omit() 
+head(tsmc)
+chartSeries(tsmc)
+chartSeries(tsmc["2021-01-01::2021-05-01",])#åŠƒå‡ºè¶¨å‹¢ç·š
+chartSeries(tsmc["2021-01-01::2021-05-01",], theme="white")
+ma5<-runMean(tsmc[,4],n=5)
+ma20<-runMean(tsmc[,4],n=20)#maç‚ºå‡ç·š
+ma60<-runMean(tsmc[,4],n=60)
 head(ma20)
-#¤@¯ë¨Ó»¡·íµu´Á§¡½u¡]¦p5¤é½u¡^¥Ñ¤U¦V¤W¬ï¹Lªø´Á§¡½u¡]¦p60¤é§¡½u¡^¡A§Î¦¨ª÷¤e¡A«h¬O¶R¤JÂI¡C 
-#¤Ï¤§¡A·íµu´Á§¡½u¡]¦p5¤é½u¡^¥Ñ¤W¦V¤U¬ï¹Lªø´Á§¡½u¡]¦p60¤é§¡½u¡^¡A§Î¦¨¦º¤e¡A«h¬O½æ¥XÂI
-chartSeries(tsmc2["2021-01-01::2021-05-01",], theme = "black")
-addTA(ma20,on=1,col="blue")#µe¤W§¡½u
+#ä¸€èˆ¬ä¾†èªªç•¶çŸ­æœŸå‡ç·šï¼ˆå¦‚5æ—¥ç·šï¼‰ç”±ä¸‹å‘ä¸Šç©¿éé•·æœŸå‡ç·šï¼ˆå¦‚60æ—¥å‡ç·šï¼‰ï¼Œå½¢æˆé‡‘å‰ï¼Œå‰‡æ˜¯è²·å…¥é»ã€‚ 
+#åä¹‹ï¼Œç•¶çŸ­æœŸå‡ç·šï¼ˆå¦‚5æ—¥ç·šï¼‰ç”±ä¸Šå‘ä¸‹ç©¿éé•·æœŸå‡ç·šï¼ˆå¦‚60æ—¥å‡ç·šï¼‰ï¼Œå½¢æˆæ­»å‰ï¼Œå‰‡æ˜¯è³£å‡ºé»
+chartSeries(tsmc["2021-01-01::2021-05-01",], theme = "black")
+addTA(ma20,on=1,col="blue")#ç•«ä¸Šå‡ç·š
 addTA(ma60,on=1,col="red") 
 addTA(ma5, on=1, col="yellow")
