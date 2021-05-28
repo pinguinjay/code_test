@@ -24,6 +24,7 @@ run;
 proc freq data=hw2;
 tables ( Sex Antibio Bact_cul Service)*Antibio/nopercent norow; /*前面的括弧是要分析哪個後面是以甚麼分組*/
 run;
+/*-----------獨立樣本t檢定-----------*/
 proc ttest data=T8_18;
 class antibio;
 var dur_stay;
@@ -51,3 +52,40 @@ tables outcomeA*outcomeB/agree; exact mcnem; /*npq大於5的話只需打agree，
 weight count;
 run;
 /*-----------McNemar test精算法----------*/
+data McNemar;
+input outcomeC $ outcomeT $ count;
+cards; 
+C1 T1 3
+C0 T1 1
+C1 T0 7
+C0 T0 9
+;/*1有高血壓0無高血壓*//*上面是在輸入數據*/
+run;
+proc freq;
+tables outcomeC*outcomeT/agree; exact mcnem;
+weight count;
+run;
+/*--------配對t檢定------*/
+data paired_t;
+input id before after; /*輸入3變相*/
+cards;
+1 115 128
+2 112 115
+3 107 106
+4 119 128
+5 115 122
+6 138 145
+7 126 132
+8 105 109
+9 104 102
+10 115 117
+;
+run;
+PROC TTEST DATA =paired_t;
+    PAIRED before*after;/*前減後，要後減前就對調，只會差負號*/
+RUN;
+
+PROC TTEST DATA =paired_t;
+    PAIRED after*before;
+RUN;
+/*-------kappa----------*/
