@@ -89,3 +89,16 @@ PROC TTEST DATA =paired_t;
     PAIRED after*before;
 RUN;
 /*-------kappa----------*/
+data kappa; /*創立kappa檔案*/
+input survey1 $ survey2 $ count;
+cards;
+1 1 136
+1 2 92
+2 1 69
+2 2 240
+;
+run;
+proc freq;
+tables survey1*survey2/agree; test kappa; /*只打agree會只算McNema test*/
+weight count;/*沒這行會以為每列只有一個人*/
+run;
