@@ -1,27 +1,28 @@
-data hw2; *­n³]ªº·sÀÉ®×ªºÀÉ¦W
-set hw; *­ì©l¸ê®ÆÀÉ¦W
-proc sort ; *­n°õ¦æ¤ÀÃş
-by Antibio; *¨Ì·ÓAntibio¤ÀÃş
+/*----------è¨­ç«‹æ–°æª”æ¡ˆ_æ’åºç”¨------------*/
+data hw2; *è¦è¨­çš„æ–°æª”æ¡ˆçš„æª”å
+set hw; *åŸå§‹è³‡æ–™æª”å
+proc sort ; *è¦åŸ·è¡Œåˆ†é¡
+by Antibio; *ä¾ç…§Antibioåˆ†é¡
+run;
+/*----------å¹³å‡æ¨™æº–å·®ç­‰ç­‰åœ°çµ±è¨ˆæè¿°------------*/
+proc means n mean std data=hw; *åˆ©ç”¨meanså‡½æ•¸æ±‚å„ç¨®å€¼è¦è®€çš„è³‡æ–™data=hw
+var Dur_stay  Age Temp WBC; *è¦ç®—å“ªå¹¾ç¨®è®Šæ•¸
 run;
 
-proc means n mean std data=hw; *§Q¥Îmeans¨ç¼Æ¨D¦UºØ­È­nÅªªº¸ê®Ædata=hw
-var Dur_stay  Age Temp WBC; *­nºâ­ş´XºØÅÜ¼Æ
-run;
-
-proc means n mean std range data=hw2; *­n¤À²Õ¤ÀªR­n¥ı§Ë¤@­Ó·s¸ê®Æ¥X¨Ó *³Ì¤W­±ªºdataset
+proc means n mean std range data=hw2; /*è¦åˆ†çµ„åˆ†æè¦å…ˆå¼„ä¸€å€‹æ–°è³‡æ–™å‡ºä¾† ç”¨ä¸Šé¢çš„datasetå‡½æ•¸*/
 var Dur_stay  Age Temp WBC;
 by Antibio;
 run;
-proc boxplot data=hw2 ; /*­nµe²°ª¬¹Ï*Åª¨ú¸ê®Æ¬°hw2*/
-plot Dur_stay*Antibio;/*y¶b¬°¦í°|¤Ñ¼Æx¶b¬°¨Ï¥Î§Ü¥Í¯À»P§_*/
+proc boxplot data=hw2 ; /*è¦ç•«ç›’ç‹€åœ–*è®€å–è³‡æ–™ç‚ºhw2*/
+plot Dur_stay*Antibio;/*yè»¸ç‚ºä½é™¢å¤©æ•¸xè»¸ç‚ºä½¿ç”¨æŠ—ç”Ÿç´ èˆ‡å¦*/
 run;
-
-proc freq data=hw;/*­n­pºâhwªº¦Ê¤À¤ñ*/
-tables Sex Antibio Bact_cul Service; /*­n§ä­ş´X­ÓÅÜ¼Æªº*/
+/*--------æ•˜è¿°æ€§çµ±è¨ˆ-----------*/
+proc freq data=hw;/*è¦è¨ˆç®—hwçš„ç™¾åˆ†æ¯”*/
+tables Sex Antibio Bact_cul Service; /*è¦æ‰¾å“ªå¹¾å€‹è®Šæ•¸çš„*/
 run;
 
 proc freq data=hw2;
-tables ( Sex Antibio Bact_cul Service)*Antibio/nopercent norow; /*«e­±ªº¬A©·¬O­n¤ÀªR­ş­Ó«á­±¬O¥H¬Æ»ò¤À²Õ*/
+tables ( Sex Antibio Bact_cul Service)*Antibio/nopercent norow; /*å‰é¢çš„æ‹¬å¼§æ˜¯è¦åˆ†æå“ªå€‹å¾Œé¢æ˜¯ä»¥ç”šéº¼åˆ†çµ„*/
 run;
 proc ttest data=T8_18;
 class antibio;
@@ -35,3 +36,18 @@ proc ttest data=hw8;
 class gender;
 var score;
 run;
+/*-------McNemar test---------*/
+data McNemar;
+input outcomeA $ outcomeB $ count; /*å¹¾å€‹è®Šç›¸åç¨±*/
+cards;  
+As Bs 510
+Ad Bs 5
+As Bd 16
+Ad Bd 90
+;/*så­˜æ´»é5å¹´ d5å¹´å…§æ­»äº¡*/
+run;
+proc freq;
+tables outcomeA*outcomeB/agree; exact mcnem; /*npqå¤§æ–¼5çš„è©±åªéœ€æ‰“agreeï¼Œä½†é€™è¡Œç¨‹å¼ç¢¼å…©å€‹éƒ½æœƒè·‘*/
+weight count;
+run;
+/*-----------McNemar testç²¾ç®—æ³•----------*/
