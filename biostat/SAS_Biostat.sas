@@ -110,3 +110,12 @@ run;
 proc corr data=c1;/*求皮爾森相關係數*/
 var height FEV;
 run;
+/*--------spearman correlation-------*/
+/*檢定是否符合常態分布*/
+PROC UNIVARIATE  NORMAL data=c142; /*檢定有無符合常態分佈*/
+VAR Apgar_1 Apgar_2;/*要測哪一些資料是否符合常態分佈*/
+RUN;/*資料小於50看w值，大於50看D值*/
+ /*計算Spearman相關係數&進行假設檢定*/
+proc corr spearman data=c142;
+var Apgar_1 Apgar_2;
+run;
