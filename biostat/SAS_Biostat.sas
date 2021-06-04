@@ -102,3 +102,11 @@ proc freq;
 tables survey1*survey2/agree; test kappa; /*只打agree會只算McNema test*/
 weight count;/*沒這行會以為每列只有一個人*/
 run;
+/*------------皮爾森相關係數--------------*/
+proc gplot data=c1;/*畫圖，看關係*/
+ plot  FEV*height ;/*先寫的在Y軸*/
+run;
+
+proc corr data=c1;/*求皮爾森相關係數*/
+var height FEV;
+run;
