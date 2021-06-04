@@ -1,12 +1,12 @@
 /*----------設立新檔案_排序用------------*/
-data hw2; *要設的新檔案的檔名
-set hw; *原始資料檔名
-proc sort ; *要執行分類
-by Antibio; *依照Antibio分類
+data hw2; /*要設的新檔案的檔名*/
+set hw; /*原始資料檔名*/
+proc sort ; /*要執行分類*/
+by Antibio; /*依照Antibio分類*/
 run;
 /*----------平均標準差等等地統計描述------------*/
-proc means n mean std data=hw; *利用means函數求各種值要讀的資料data=hw
-var Dur_stay  Age Temp WBC; *要算哪幾種變數
+proc means n mean std data=hw; /*利用means函數求各種值要讀的資料data=hw*/
+var Dur_stay  Age Temp WBC; /*要算哪幾種變數*/
 run;
 
 proc means n mean std range data=hw2; /*要分組分析要先弄一個新資料出來 用上面的dataset函數*/
