@@ -122,3 +122,17 @@ run;
 proc corr data=c142;/*如果符合常態分佈*/
 var Apgar_1 Apgar_2;
 run;
+
+
+
+
+/*---Kruskal-Wallis test----*/
+/*檢定是否符合常態分布*/
+proc univariate normal;
+var BMI;/*看W值*/
+run;
+/*進行Kruskal-Wallis test*/
+PROC NPAR1WAY  WILCOXON; 
+CLASS group; /*類別*/
+VAR BMI; 
+RUN;
