@@ -1,11 +1,13 @@
 /*本程式集合由企鵝在2021年6月11日上傳，適用於陳老師的生統課程。因為不會再上這門課了，因此我不會去主動更新了，故如果要更新的話歡迎用github的pull request功能給我更新*/
 /*使用方法為複製貼上，直接下載的話中文註解很容易變亂碼*/
+
 /*----------設立新檔案_排序用------------*/
 data hw2; /*要設的新檔案的檔名*/
 set hw; /*原始資料檔名*/
 proc sort ; /*要執行分類*/
 by Antibio; /*依照Antibio分類*/
 run;
+
 /*----------平均標準差等等地統計描述------------*/
 proc means n mean std data=hw; /*利用means函數求各種值要讀的資料data=hw*/
 var Dur_stay  Age Temp WBC; /*要算哪幾種變數*/
@@ -18,6 +20,7 @@ run;
 proc boxplot data=hw2 ; /*要畫盒狀圖*讀取資料為hw2*/
 plot Dur_stay*Antibio;/*y軸為住院天數x軸為使用抗生素與否*/
 run;
+
 /*--------敘述性統計-----------*/
 proc freq data=hw;/*要計算hw的百分比*/
 tables Sex Antibio Bact_cul Service; /*要找哪幾個變數的*/
@@ -26,6 +29,7 @@ run;
 proc freq data=hw2;
 tables ( Sex Antibio Bact_cul Service)*Antibio/nopercent norow; /*前面的括弧是要分析哪個後面是以甚麼分組*/
 run;
+
 /*-----------獨立樣本t檢定-----------*/
 proc ttest data=T8_18;
 class antibio;
@@ -39,6 +43,7 @@ proc ttest data=hw8;
 class gender;
 var score;
 run;
+
 /*-------McNemar test---------*/
 data McNemar;
 input outcomeA $ outcomeB $ count; /*幾個變相名稱*/
@@ -53,6 +58,7 @@ proc freq;
 tables outcomeA*outcomeB/agree; exact mcnem; /*npq大於5的話只需打agree，但這行程式碼兩個都會跑*/
 weight count;
 run;
+
 /*-----------McNemar test精算法----------*/
 data McNemar;
 input outcomeC $ outcomeT $ count;
@@ -90,6 +96,7 @@ RUN;
 PROC TTEST DATA =paired_t;
     PAIRED after*before;
 RUN;
+
 /*-------kappa----------*/
 data kappa; /*創立kappa檔案*/
 input survey1 $ survey2 $ count;
@@ -124,9 +131,6 @@ run;
 proc corr data=c142;/*如果符合常態分佈*/
 var Apgar_1 Apgar_2;
 run;
-
-
-
 
 /*---Kruskal-Wallis test----*/
 /*檢定是否符合常態分布*/
