@@ -237,3 +237,65 @@ if p > alpha:
     print('same distributions/same group mean (fail to reject H0 - we do not have enough evidence to reject H0)')
 else:
     print('different distributions/different group mean (reject H0)')
+
+# As an effect size, Cohen's d is typically used to represent the magnitude of differences between two (or more) groups on a given variable, with larger values representing a greater differentiation between the two groups on that variable.
+# we hope the effect sizes for features decrease after matching
+# adapted from https://machinelearningmastery.com/effect-size-measures-in-python/
+
+from numpy import mean
+from numpy import var
+from math import sqrt
+ 
+# function to calculate Cohen's d for independent samples
+def cohen_d(d1, d2):
+	# calculate the size of samples
+	n1, n2 = len(d1), len(d2)
+	# calculate the variance of the samples
+	s1, s2 = var(d1, ddof=1), var(d2, ddof=1)
+	# calculate the pooled standard deviation
+	s = sqrt(((n1 - 1) * s1 + (n2 - 1) * s2) / (n1 + n2 - 2))
+	# calculate the means of the samples
+	u1, u2 = mean(d1), mean(d2)
+	# calculate the effect size
+	return (u1 - u2) / s
+
+effect_sizes = []
+cols = ['prom_length', 'price', 'discount_pct', 'coupon_duration', 'featured','limited_supply']
+
+for cl in cols:
+    _, p_before = ttest_ind(df_control[cl], df_treatment[cl])
+    _, p_after = ttest_ind(df_matched_control[cl], df_matched_treatment[cl])
+    cohen_d_before = cohen_d(df_treatment[cl], df_control[cl])
+    cohen_d_after = cohen_d(df_matched_treatment[cl], df_matched_control[cl])
+    effect_sizes.append([cl,'before', cohen_d_before, p_before])
+    effect_sizes.append([cl,'after', cohen_d_after, p_after])
+
+df_effect_sizes = pd.DataFrame(effect_sizes, columns=['feature', 'matching', 'effect_size', 'p-value'])
+df_effect_sizes
+
+# discount_pct and featured are not significant, all other features are more balanced after matching
+fig, ax = plt.subplots(figsize=(15, 5))
+sns.barplot(data=df_effect_sizes, x='effect_size', y='feature', hue='matching', orient='h')
+
+
+!pip install psmpy
+from psmpy import PsmPy
+from psmpy.plotting import *
+df_psmpy = pd.read_csv('../input/propensity-score-matching/groupon.csv')
+df_psmpy.info()
+
+# exclude: ignore any covariates (columns) passed to the it during model fitting
+# indx - required parameter that references a unique ID number for each case
+psm = PsmPy(df_psmpy, treatment='treatment', indx='deal_id', exclude = ['min_req', 'start_date', 'fb_likes', 'quantity_sold', 'revenue'])
+
+# same as my code using balance=False
+psm.logistic_ps(balance=False)
+psm.predicted_data
+
+psm.knn_matched(matcher='propensity_logit', replacement=False, caliper=None)
+
+psm.plot_match(Title='Matching Result', Ylabel='# of obs', Xlabel= 'propensity logit', names = ['treatment', 'control'])
+
+psm.effect_size_plot()
+
+psm.effect_size
