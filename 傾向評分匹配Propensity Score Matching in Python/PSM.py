@@ -157,3 +157,83 @@ knn = NearestNeighbors(n_neighbors=n_neighbors, radius=caliper)
 
 ps = df[['ps']]  # double brackets as a dataframe
 knn.fit(ps)
+
+# distances and indexes
+distances, neighbor_indexes = knn.kneighbors(ps)
+
+print(neighbor_indexes.shape)
+
+# the 10 closest points to the first point
+print(distances[0])
+print(neighbor_indexes[0])
+
+# for each point in treatment, we find a matching point in control without replacement
+# note the 10 neighbors may include both points in treatment and control
+
+matched_control = []  # keep track of the matched observations in control
+
+for current_index, row in df.iterrows():  # iterate over the dataframe
+    if row.treatment == 0:  # the current row is in the control group
+        df.loc[current_index, 'matched'] = np.nan  # set matched to nan
+    else: 
+        for idx in neighbor_indexes[current_index, :]: # for each row in treatment, find the k neighbors
+            # make sure the current row is not the idx - don't match to itself
+            # and the neighbor is in the control 
+            if (current_index != idx) and (df.loc[idx].treatment == 0):
+                if idx not in matched_control:  # this control has not been matched yet
+                    df.loc[current_index, 'matched'] = idx  # record the matching
+                    matched_control.append(idx)  # add the matched to the list
+                    break
+
+# try to increase the number of neighbors and/or caliper to get more matches
+print('total observations in treatment:', len(df[df.treatment==1]))
+print('total matched observations in control:', len(matched_control))
+
+# control have no match
+treatment_matched = df.dropna(subset=['matched'])  # drop not matched
+
+# matched control observation indexes
+control_matched_idx = treatment_matched.matched
+control_matched_idx = control_matched_idx.astype(int)  # change to int
+control_matched = df.loc[control_matched_idx, :]  # select matched control observations
+
+# combine the matched treatment and control
+df_matched = pd.concat([treatment_matched, control_matched])
+
+df_matched.treatment.value_counts()
+
+# matched control and treatment
+df_matched_control = df_matched[df_matched.treatment==0]
+df_matched_treatment = df_matched[df_matched.treatment==1]
+
+# student's t-test for revenue (dependent variable) after matching
+# p value is not significant now
+from scipy.stats import ttest_ind
+print(df_matched_control.revenue.mean(), df_matched_treatment.revenue.mean())
+
+# compare samples
+_, p = ttest_ind(df_matched_control.revenue, df_matched_treatment.revenue)
+print(f'p={p:.3f}')
+
+# interpret
+alpha = 0.05  # significance level
+if p > alpha:
+    print('same distributions/same group mean (fail to reject H0 - we do not have enough evidence to reject H0)')
+else:
+    print('different distributions/different group mean (reject H0)')
+
+# student's t-test for facebook likes(dependent variable) after matching
+# p value is smaller compared with before matching
+from scipy.stats import ttest_ind
+print(df_matched_control.fb_likes.mean(), df_matched_treatment.fb_likes.mean())
+
+# compare samples
+_, p = ttest_ind(df_matched_control.fb_likes, df_matched_treatment.fb_likes)
+print(f'p={p:.3f}')
+
+# interpret
+alpha = 0.05  # significance level
+if p > alpha:
+    print('same distributions/same group mean (fail to reject H0 - we do not have enough evidence to reject H0)')
+else:
+    print('different distributions/different group mean (reject H0)')
