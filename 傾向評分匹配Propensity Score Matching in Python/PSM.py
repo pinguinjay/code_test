@@ -85,3 +85,20 @@ pred_prob = lr.predict_proba(X)  # probabilities for classes
 
 print('the binary prediction is:', pred_binary[0])
 print('the corresponding probabilities are:', pred_prob[0])
+
+# the propensity score (ps) is the probability of being 1 (i.e., in the treatment group)
+df['ps'] = pred_prob[:, 1]
+
+# calculate the logit of the propensity score for matching if needed
+# I just use the propensity score to match in this tutorial
+def logit(p):
+    logit_value = math.log(p / (1-p))
+    return logit_value
+
+df['ps_logit'] = df.ps.apply(lambda x: logit(x))
+
+df.head()
+
+# check the overlap of ps for control and treatment using histogram
+# if not much overlap, the matching won't work
+sns.histplot(data=df, x='ps', hue='treatment')  # multiple="dodge" for 
