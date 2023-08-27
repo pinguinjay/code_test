@@ -102,3 +102,58 @@ df.head()
 # check the overlap of ps for control and treatment using histogram
 # if not much overlap, the matching won't work
 sns.histplot(data=df, x='ps', hue='treatment')  # multiple="dodge" for 
+
+# adding 'min_req' here makes matching not working - because treatment is derived from min_req
+# there is no overlap and thus matching will not work
+X1 = df[['min_req', 'prom_length', 'price', 'discount_pct', 'coupon_duration', 'featured','limited_supply']]
+y = df['treatment']
+
+# use logistic regression to calculate the propensity scores
+lr1 = LogisticRegression(max_iter=1000)
+lr1.fit(X1, y)
+
+pred_prob1 = lr1.predict_proba(X1)  # probabilities for classes
+df['ps1'] = pred_prob1[:, 1]
+
+sns.histplot(data=df, x='ps1', hue='treatment')
+
+# stating date can also determine treatment value for most cases
+# so we do not include it in the propensity score calculation
+df.start_date = pd.to_datetime(df.start_date)
+fig, ax = plt.subplots(figsize=(20, 10))
+sns.scatterplot(data=df, x='start_date', y='revenue', hue='treatment')
+
+# adding 'starting_date' here via a `recency` feature
+# there is only little overlap resulting in not enough matched observations
+
+last_date = df.start_date.max()
+df['recency'] = (last_date - df.start_date).dt.days
+
+X2 = df[['recency', 'prom_length', 'price', 'discount_pct', 'coupon_duration', 'featured','limited_supply']]
+y = df['treatment']
+
+# use logistic regression to calculate the propensity scores
+lr2 = LogisticRegression(max_iter=1000)
+lr2.fit(X2, y)
+
+pred_prob2 = lr2.predict_proba(X2)  # probabilities for classes
+df['ps2'] = pred_prob2[:, 1]
+
+sns.histplot(data=df, x='ps2', hue='treatment')
+
+# use 25% of standard deviation of the propensity score as the caliper/radius
+# get the k closest neighbors for each observations
+# relax caliper and increase k can provide more matches
+
+from sklearn.neighbors import NearestNeighbors
+
+caliper = np.std(df.ps) * 0.25
+print(f'caliper (radius) is: {caliper:.4f}')
+
+n_neighbors = 10
+
+# setup knn
+knn = NearestNeighbors(n_neighbors=n_neighbors, radius=caliper)
+
+ps = df[['ps']]  # double brackets as a dataframe
+knn.fit(ps)
