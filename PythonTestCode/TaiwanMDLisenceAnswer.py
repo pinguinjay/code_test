@@ -21,4 +21,7 @@ with open(PATH,encoding="utf-8") as fh :
         add2list(answer_list,row)
 
 cnt = calculateAnswerNumber(answer_list)
-#print(cnt)
+"""
+110-1~112-2這三年六次的結果是
+{'Ｂ': 314, 'Ｃ': 312, 'Ａ': 291, 'Ｄ': 283}
+"""
