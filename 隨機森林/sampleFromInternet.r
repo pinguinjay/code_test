@@ -139,3 +139,34 @@ mean ((yhat.tune.rf - test$medv)^2)#MSE
 importance (rf.tune.boston)        # %Increase in MSE(); Increase in node purity
 importance (rf.tune.boston,type=1) # %IncMSE
 varImpPlot (rf.tune.boston)
+
+####Iris dataset實例示範 隨機森林 Random Forest Classification Example####
+library(randomForest)
+data("iris")
+names(iris)
+dim(iris)
+sqrt(5)
+set.seed(123)
+index.train.iris = sample(1:nrow(iris), size=ceiling(0.8*nrow(iris)))
+train.iris = iris[index.train.iris, ]
+test.iris = iris[-index.train.iris, ]
+
+rf.iris<-randomForest(Species~.,  data=iris, subset=index.train.iris)
+plot(rf.iris,lwd=2)
+
+#Important variables
+importance(rf.iris) # MeanDecreaseGini
+varImpPlot(rf.iris, sort = TRUE)
+
+## Perform on the testing data
+# predict()
+# type: response(預測的分類), prob(預測分為各種類的機率), vote(預測時各分類的獲得的投票數)
+predict(rf.iris, test.iris, type="response")
+predict(rf.iris, test.iris, type="prob")
+predict(rf.iris, test.iris, type="vote")
+
+iris.pred <- predict(rf.iris, test.iris) # 預設為type="response"
+iris.pred
+
+table(observed=test.iris$Species , predicted = iris.pred) # Confusion matrix
+mean(test.iris$Species==iris.pred) # Accuracy
