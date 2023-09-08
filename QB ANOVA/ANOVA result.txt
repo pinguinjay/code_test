@@ -1,0 +1,133 @@
+ Response V1 :
+             Df   Sum Sq    Mean Sq F value      Pr(>F)    
+Group         4 0.011158 0.00278944  9.4249 0.000001242 ***
+Residuals   116 0.034332 0.00029597                        
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+ Response V2 :
+             Df Sum Sq Mean Sq F value              Pr(>F)    
+Group         4 34.144  8.5360  22.533 0.00000000000008691 ***
+Residuals   116 43.943  0.3788                                
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+ Response V3 :
+             Df    Sum Sq    Mean Sq F value
+Group         4 0.0055830 0.00139576  33.096
+Residuals   116 0.0048921 0.00004217        
+                           Pr(>F)    
+Group       < 0.00000000000000022 ***
+Residuals                            
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+ Response V4 :
+             Df Sum Sq Mean Sq F value              Pr(>F)    
+Group         4 71.861 17.9651  25.513 0.00000000000000356 ***
+Residuals   116 81.682  0.7042                                
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+ Response V5 :
+             Df Sum Sq Mean Sq F value                Pr(>F)    
+Group         4 4018.6 1004.64   48.75 < 0.00000000000000022 ***
+Residuals   116 2390.5   20.61                                  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+ Response V6 :
+             Df Sum Sq Mean Sq F value                Pr(>F)    
+Group         4 70.430 17.6076  41.544 < 0.00000000000000022 ***
+Residuals   116 49.165  0.4238                                  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+ Response V7 :
+             Df   Sum Sq    Mean Sq F value      Pr(>F)    
+Group         4 0.010889 0.00272230  8.4782 0.000004895 ***
+Residuals   116 0.037247 0.00032109                        
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+ Response V8 :
+             Df  Sum Sq Mean Sq F value  Pr(>F)  
+Group         4  3.2425 0.81063  3.2589 0.01424 *
+Residuals   116 28.8537 0.24874                  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+ Response V9 :
+             Df Sum Sq Mean Sq F value Pr(>F)
+Group         4   60.6  15.149  1.1244 0.3485
+Residuals   116 1562.9  13.473               
+
+ Response V10 :
+             Df   Sum Sq   Mean Sq F value      Pr(>F)    
+Group         4 0.062243 0.0155607  8.8858 0.000002703 ***
+Residuals   116 0.203137 0.0017512                        
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+ Response V11 :
+             Df  Sum Sq   Mean Sq F value              Pr(>F)    
+Group         4 0.10088 0.0252188  23.242 0.00000000000004003 ***
+Residuals   116 0.12587 0.0010851                                
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+ Response V12 :
+             Df Sum Sq Mean Sq F value                Pr(>F)    
+Group         4   6032 1507.99  31.082 < 0.00000000000000022 ***
+Residuals   116   5628   48.52                                  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+ Response V13 :
+             Df    Sum Sq    Mean Sq F value          Pr(>F)    
+Group         4 0.0026346 0.00065864  15.629 0.0000000002949 ***
+Residuals   116 0.0048884 0.00004214                            
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+ Response V14 :
+             Df Sum Sq Mean Sq F value          Pr(>F)    
+Group         4 11.252 2.81305  15.573 0.0000000003166 ***
+Residuals   116 20.954 0.18064                            
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+ Response V15 :
+             Df Sum Sq Mean Sq F value            Pr(>F)    
+Group         4 18.549  4.6373  22.362 0.000000000000105 ***
+Residuals   116 24.055  0.2074                              
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+ Response V16 :
+             Df Sum Sq Mean Sq F value      Pr(>F)    
+Group         4 199.49  49.873  8.9088 0.000002615 ***
+Residuals   116 649.39   5.598                        
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+ Response V17 :
+             Df Sum Sq Mean Sq F value              Pr(>F)    
+Group         4 763.98  191.00  24.025 0.00000000000001717 ***
+Residuals   116 922.17    7.95                                
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+ Response V18 :
+             Df  Sum Sq Mean Sq F value                Pr(>F)    
+Group         4 1.60111 0.40028  49.688 < 0.00000000000000022 ***
+Residuals   116 0.93446 0.00806                                  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+ Response V19 :
+             Df  Sum Sq  Mean Sq F value Pr(>F)  
+Group         4 0.28042 0.070106  2.7391  0.032 *
+Residuals   116 2.96891 0.025594                 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
