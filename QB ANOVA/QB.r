@@ -24,7 +24,7 @@ for (colnumber in c(2:length(NL1))) { #length(NL1)，幾個變數
 }
 #write.csv(SD.df,file="D:\\standarddev.csv")
 
-#ANOVA
+##ANOVA
 
 formula <- as.formula(paste0("cbind(", paste(names(NL1)[-1], collapse = ","), ") ~ Group"))
 fit<- aov(formula,data = NL1)
